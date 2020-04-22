@@ -12,24 +12,18 @@ class MOBI(Node):
 
         self.battery = Battery()
         self.separation_detected = False
+        self.battery_switch_opened = True
         self.CV_in = CV()
         self.CV_out = CV()
-
-    # This attribute Ibus comes from the CV_out so we
-    # use a getter and a setter to access it
-    @property
-    def Ibus(self):
-        return self.CV_out.Iout
-
-    @Ibus.setter
-    def Ibus(self, value):
-        self.CV_out.Iout = value
+        self.bus = Bus()
 
     def __str__(self):
         text = f"""MOBI #{self.id}
     State:
         Separation detected: {self.separation_detected}
-        Bus current (Ibus): {self.Ibus}A
+        Battery switch state: {'Opened' if self.battery_switch_opened else 'Closed'}
+    Bus:
+{indent(str(self.bus), 8 * " ")}
     CVs:
         CV_in:
 {indent(str(self.CV_in), 12 * " ")}
@@ -52,10 +46,24 @@ class CV:
     def __str__(self) -> str:
         text = f"""\
         State {self.state}
-        Iset: {self.Iset}
-        Vset: {self.Vset}
-        Iout: {self.Iout}
-        Temperature: {self.temperature}\
+        Iset: {self.Iset}A
+        Vset: {self.Vset}V
+        Iout: {self.Iout}A
+        Temperature: {self.temperature}°C\
+        """
+
+        return dedent(text)
+
+
+class Bus:
+    def __init__(self):
+        self.current = 0
+        self.voltage = 0
+
+    def __str__(self) -> str:
+        text = f"""\
+        Ibus: {self.current}A
+        Vbus: {self.voltage}V\
         """
 
         return dedent(text)
