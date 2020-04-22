@@ -6,9 +6,7 @@ class Battery:
         # Battery configuration
         self.S = 12  # For our demonstrator, S is always 12
         self.P = P
-        self.cells = []
-        for _ in range(self.P):
-            self.cells.append(Cell())
+        self.cells = [Cell() for _ in range(self.P)]
 
         # Battery State
         self.voltage = 0

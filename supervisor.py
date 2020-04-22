@@ -6,23 +6,18 @@ class MotherSupervisor:
 
     def __init__(self, name: str):
         self.name = name
-        self.BOMO_loaded = False
-        self.MOBI_loaded = False
+        self.BOMOs = []
+        self.MOBIs = []
 
     def load_BOMO(self, BOMOs: list):
         assert isinstance(BOMOs, list), "BOMOs argument must be a *list* of BOMOs"
 
         self.BOMOs = BOMOs
-        print(self.BOMOs)
-
-        self.BOMO_loaded = True
 
     def load_MOBI(self, MOBIs: list):
         assert isinstance(MOBIs, list), "MOBIs argument must be a *list* of MOBIs"
 
         self.MOBIs = MOBIs
-
-        self.MOBI_loaded = True
 
 
 class Supervisor(MotherSupervisor):
@@ -34,10 +29,16 @@ class Supervisor(MotherSupervisor):
     def run(self):
         """ Example for a run method. """
 
-        if not (self.BOMO_loaded or self.MOBI_loaded):
+        if len(self.BOMOs) == 0 and len(self.MOBIs) == 0:
             print("You must load at least one BOMO or MOBI to run supervisor.")
         else:
             print("running supervisor..")
+
+            print(f"Setup:")
+
+            print(f"{len(self.MOBIs)} MOBI(s) loaded")
+            print(f"{len(self.BOMOs)} BOMO(s) loaded")
+
             print("MOBIs battery's voltage:")
             for MOBI in self.MOBIs:
                 print(f"\tMOBI #{MOBI.id}: {MOBI.battery.voltage}V")
@@ -48,6 +49,7 @@ if __name__ == "__main__":
     """Usage example"""
 
     from MOBI import MOBI
+    from BOMO import BOMO
 
     # Let's create a MOBI
     MOBI_1 = MOBI(1)
@@ -68,9 +70,12 @@ if __name__ == "__main__":
     supervisor.run()
     print("")
 
-    # Ok this time let's create another pair of MOBIs and add them to the supervisor
+    # Ok this time let's create another pair of MOBIs and BOMOs and add them to the supervisor
     # Note that it will replace the precedent MOBI(s) loaded
     MOBIs = [MOBI(1), MOBI(2)]
+    BOMOs = [BOMO(1), BOMO(2), BOMO(3)]
+
     supervisor.load_MOBI(MOBIs)
+    supervisor.load_BOMO(BOMOs)
     supervisor.run()
     print("")
