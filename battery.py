@@ -33,7 +33,7 @@ class Battery:
 
 class Cell:
     def __init__(self, voltage: int = 0):
-        self.voltage = 0
+        self.voltage = voltage
         self.temperature = 0
 
 
