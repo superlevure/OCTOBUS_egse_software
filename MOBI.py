@@ -45,8 +45,8 @@ class CV:
     def __str__(self) -> str:
         text = f"""\
         State {self.state}
-        Iset: {self.Iset}A
         Vset: {self.Vset}V
+        Iset: {self.Iset}A
         Iout: {self.Iout}A
         Temperature: {self.temperature}°C\
         """
@@ -61,8 +61,8 @@ class Bus:
 
     def __str__(self) -> str:
         text = f"""\
-        Ibus: {self.current}A
-        Vbus: {self.voltage}V\
+        Voltage: {self.voltage}V
+        Current: {self.current}A\
         """
 
         return dedent(text)
@@ -93,7 +93,7 @@ class Battery:
 
         text = dedent(text)
         for p, cell in enumerate(self.cells):
-            text += f"\tCell [{p}]: {cell.voltage}V / {cell.temperature}°C\n"
+            text += f"    Cell #{p}: {cell}"
 
         return text
 
@@ -102,6 +102,9 @@ class Cell:
     def __init__(self, voltage: int = 0):
         self.voltage = voltage
         self.temperature = 0
+
+    def __str__(self) -> str:
+        return f"{self.voltage}V / {self.temperature}°C\n"
 
 
 if __name__ == "__main__":
