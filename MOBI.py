@@ -30,6 +30,8 @@ class MOBI(Node):
 {indent(str(self.CV_out), 12 * " ")}
     Battery:
 {indent(str(self.battery), 8 * " ")}
+    CAN:
+{indent(str(self.CAN), 8 * " ")}
         """
         return text
 
@@ -94,6 +96,8 @@ class Battery:
         text = dedent(text)
         for p, cell in enumerate(self.cells):
             text += f"    Cell #{p}: {cell}"
+            if p != len(self.cells) - 1:
+                text += "\n"
 
         return text
 
@@ -104,7 +108,7 @@ class Cell:
         self.temperature = 0
 
     def __str__(self) -> str:
-        return f"{self.voltage}V / {self.temperature}°C\n"
+        return f"{self.voltage}V / {self.temperature}°C"
 
 
 if __name__ == "__main__":

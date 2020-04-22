@@ -79,3 +79,14 @@ if __name__ == "__main__":
     supervisor.load_BOMO(BOMOs)
     supervisor.run()
     print("")
+
+    # One can access any node's information easily
+    print("MOBI #0 - CV in - Iout = ", end="")
+    print(MOBIs[0].CV_in.Iout, end="")
+    print("A")
+
+    MOBIs[0].CV_in.Iout = 23
+
+    print("MOBI #0 - CV in - Iout = ", end="")
+    print(MOBIs[0].CV_in.Iout, end="")
+    print("A")
