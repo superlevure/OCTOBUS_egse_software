@@ -131,3 +131,5 @@ dmypy.json
 .pyre/
 .vscode/settings.json
 test.py
+docs/make.bat
+docs/Makefile
