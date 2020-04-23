@@ -7,12 +7,14 @@ class Node:
     Attributes:
         id (int): node's id
         reset_count (int)
+        mode (str): current mode
         CAN (CAN): node's CAN instance
     """
 
     def __init__(self, id):
         self.id = id
         self.reset_count = 0
+        self.mode = ""
         self.CAN = CAN()
 
     def __repr__(self) -> str:
