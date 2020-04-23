@@ -4,6 +4,17 @@ from node import Node
 
 
 class MOBI(Node):
+    """MOBI class
+
+    Attributes:
+        battery (Battery): MOBI's battery
+        separation_detected (bool): Strap separation detection state
+        battery_switch_opened (bool): Battery's switch state
+        CV_in (CV): Bus to battery convertor
+        CV_out (CV): Battery to bus convertor
+        bus (Bus): Bus voltage/current sensing 
+    """
+
     name = "MOBI"
 
     def __init__(self, id):

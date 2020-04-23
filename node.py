@@ -2,6 +2,14 @@ from textwrap import dedent
 
 
 class Node:
+    """ Node
+
+    Attributes:
+        id (int): node's id
+        reset_count (int)
+        CAN (CAN): node's CAN instance
+    """
+
     def __init__(self, id):
         self.id = id
         self.reset_count = 0
@@ -12,6 +20,13 @@ class Node:
 
 
 class CAN:
+    """ CAN
+
+    Attributes:
+        TEC (int): Transmission Error Count
+        REC (int): Reception Error Count
+    """
+
     def __init__(self):
         self.TEC = 0
         self.REC = 0

@@ -2,6 +2,11 @@ class MotherSupervisor:
     """Mother of all supervisors
 
     You don't need to mess with this
+
+    Attributes:
+        name (str)
+        BOMOs (list): List of BOMO(s)
+        MOBIs (list): List of MOBI(s)
     """
 
     def __init__(self, name: str):
@@ -10,11 +15,21 @@ class MotherSupervisor:
         self.MOBIs = []
 
     def load_BOMO(self, BOMOs: list):
+        """Loads BOMO(s) into the supervisor
+
+        Arguments:
+            BOMOs (list) -- List of BOMO(s)
+        """
         assert isinstance(BOMOs, list), "BOMOs argument must be a *list* of BOMOs"
 
         self.BOMOs = BOMOs
 
     def load_MOBI(self, MOBIs: list):
+        """Loads MOBI(s) into the supervisor
+
+        Arguments:
+            MOBIs (list) -- List of MOBI(s)
+        """
         assert isinstance(MOBIs, list), "MOBIs argument must be a *list* of MOBIs"
 
         self.MOBIs = MOBIs
@@ -23,7 +38,7 @@ class MotherSupervisor:
 class Supervisor(MotherSupervisor):
     """A custom supervisor
 
-    This is the class that you would write Quentin for each of yours supervisors
+    This is the class that you would write Quentin for each of your supervisors
     """
 
     def run(self):
