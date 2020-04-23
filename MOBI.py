@@ -13,6 +13,7 @@ class MOBI(Node):
         CV_in (CV): Bus to battery convertor
         CV_out (CV): Battery to bus convertor
         bus (Bus): Bus voltage/current sensing 
+        APS (APS): Auxiliary Power Supply 
     """
 
     name = "MOBI"
@@ -26,6 +27,7 @@ class MOBI(Node):
         self.CV_in = CV()
         self.CV_out = CV()
         self.bus = Bus()
+        self.APS = APS()
 
     def __str__(self):
         text = f"""MOBI #{self.id}
@@ -48,12 +50,24 @@ class MOBI(Node):
 
 
 class CV:
+    """MOBI's CV
+
+    Hold the state of a MOBI's CV
+
+    Attributes: 
+        Iset (float)
+        Vset (float)
+        state (bool): CV's state 
+        temperature (float)
+        Iout (float)
+    """
+
     def __init__(self):
-        self.Iset = 0
-        self.Vset = 0
+        self.Iset = 0.0
+        self.Vset = 0.0
         self.state = "OFF"
-        self.temperature = 0
-        self.Iout = 0
+        self.temperature = 0.0
+        self.Iout = 0.0
 
     def __str__(self) -> str:
         text = f"""\
@@ -67,10 +81,35 @@ class CV:
         return dedent(text)
 
 
+class APS:
+    """MOBI's APS
+
+    Hold the state of a MOBI's APS
+
+    Attributes: 
+        temperature1 (float)
+        temperature2 (float)
+    """
+
+    def __init__(self) -> None:
+        self.temperature1 = 0.0
+        self.temperature2 = 0.0
+
+
 class Bus:
+    """Bus sensing
+
+    Hold the state of a MOBI's bus sensing 
+
+    Attributes: 
+        current (float)
+        voltage (float)
+
+    """
+
     def __init__(self):
-        self.current = 0
-        self.voltage = 0
+        self.current = 0.0
+        self.voltage = 0.0
 
     def __str__(self) -> str:
         text = f"""\
@@ -82,6 +121,21 @@ class Bus:
 
 
 class Battery:
+    """MOBI's battery
+
+    Holds the battery state of a MOBI
+
+    Attributes:
+        S (int): Number of cells in serie
+        P (int): Number of strings in parallel
+        cells (Cell): Battery's cells 
+        voltage (float): Battery's voltage
+        current (float): Battery's current
+        SOC (int): Battery's State Of Charge
+        SOH (int): Battery's State Of Health
+        temperatures (list): BMS cells temperatures list
+    """
+
     def __init__(self, P: int = 10):
         # Battery configuration
         self.S = 12  # For our demonstrator, S is always 12
@@ -89,10 +143,11 @@ class Battery:
         self.cells = [Cell() for _ in range(self.P)]
 
         # Battery State
-        self.voltage = 0
-        self.current = 0
+        self.voltage = 0.0
+        self.current = 0.0
         self.SOC = 0
         self.SOH = 0
+        self.temperatures = [0.0 for _ in range(5)]
 
     def __str__(self):
         """ String representation of the battery"""
@@ -114,12 +169,19 @@ class Battery:
 
 
 class Cell:
-    def __init__(self, voltage: int = 0):
+    """Battery's Cell
+
+    Holds the cell state of a battery
+
+    Attributes:
+        voltage (float)
+    """
+
+    def __init__(self, voltage: float = 0.0):
         self.voltage = voltage
-        self.temperature = 0
 
     def __str__(self) -> str:
-        return f"{self.voltage}V / {self.temperature}°C"
+        return f"{self.voltage}V"
 
 
 if __name__ == "__main__":
