@@ -18,7 +18,7 @@ class MotherSupervisor:
         """Loads BOMO(s) into the supervisor
 
         Arguments:
-            BOMOs (list) -- List of BOMO(s)
+            BOMOs (list): List of BOMO(s)
         """
         assert isinstance(BOMOs, list), "BOMOs argument must be a *list* of BOMOs"
 
@@ -28,7 +28,7 @@ class MotherSupervisor:
         """Loads MOBI(s) into the supervisor
 
         Arguments:
-            MOBIs (list) -- List of MOBI(s)
+            MOBIs (list): List of MOBI(s)
         """
         assert isinstance(MOBIs, list), "MOBIs argument must be a *list* of MOBIs"
 
