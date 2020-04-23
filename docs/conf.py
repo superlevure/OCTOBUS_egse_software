@@ -10,7 +10,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import inspect
 import os
+from os.path import relpath, dirname
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
@@ -62,11 +64,60 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_static_path = ["_static"]
 
 
-# -- Extension configuration -------------------------------------------------
 def linkcode_resolve(domain, info):
+    """
+    Determine the URL corresponding to Python object
+    """
     if domain != "py":
         return None
-    if not info["module"]:
+
+    modname = info["module"]
+    fullname = info["fullname"]
+
+    submod = sys.modules.get(modname)
+    if submod is None:
         return None
-    filename = info["module"].replace(".", "/")
-    return "https://github.com/superlevure/OCTOBUS_egse_software/%s.py" % filename
+
+    obj = submod
+    for part in fullname.split("."):
+        try:
+            obj = getattr(obj, part)
+        except Exception:
+            return None
+
+    # strip decorators, which would resolve to the source of the decorator
+    # possibly an upstream bug in getsourcefile, bpo-1764286
+    try:
+        unwrap = inspect.unwrap
+    except AttributeError:
+        pass
+    else:
+        obj = unwrap(obj)
+
+    try:
+        fn = inspect.getsourcefile(obj)
+    except Exception:
+        fn = None
+    if not fn:
+        return None
+
+    try:
+        source, lineno = inspect.getsourcelines(obj)
+    except Exception:
+        lineno = None
+
+    if lineno:
+        linespec = "#L%d-L%d" % (lineno, lineno + len(source) - 1)
+    else:
+        linespec = ""
+
+    # print(fn)
+    fn = relpath(fn, start=dirname("../"))
+    # print(fn)
+
+    repo = "https://github.com/superlevure/OCTOBUS_egse_software/blob/master/"
+
+    output = f"{repo}{fn}{linespec}"
+    print(output)
+
+    return output
