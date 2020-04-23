@@ -63,3 +63,10 @@ html_static_path = ["_static"]
 
 
 # -- Extension configuration -------------------------------------------------
+def linkcode_resolve(domain, info):
+    if domain != "py":
+        return None
+    if not info["module"]:
+        return None
+    filename = info["module"].replace(".", "/")
+    return "https://github.com/superlevure/OCTOBUS_egse_software/%s.py" % filename
