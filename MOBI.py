@@ -1,4 +1,5 @@
 from textwrap import indent, dedent
+from dataclasses import dataclass
 
 from node import Node
 
@@ -49,6 +50,7 @@ class MOBI(Node):
         return text
 
 
+@dataclass
 class CV:
     """MOBI's CV
 
@@ -57,17 +59,16 @@ class CV:
     Attributes: 
         Iset (float)
         Vset (float)
-        state (bool): CV's state 
+        state (str): CV's state 
         temperature (float)
         Iout (float)
     """
 
-    def __init__(self):
-        self.Iset = 0.0
-        self.Vset = 0.0
-        self.state = "OFF"
-        self.temperature = 0.0
-        self.Iout = 0.0
+    Iset: float = 0.0
+    Vset: float = 0.0
+    state: str = "OFF"
+    temperature: float = 0.0
+    Iout: float = 0.0
 
     def __str__(self) -> str:
         text = f"""\
@@ -81,6 +82,7 @@ class CV:
         return dedent(text)
 
 
+@dataclass
 class APS:
     """MOBI's APS
 
@@ -91,11 +93,11 @@ class APS:
         temperature2 (float)
     """
 
-    def __init__(self) -> None:
-        self.temperature1 = 0.0
-        self.temperature2 = 0.0
+    temperature1: float = 0.0
+    temperature2: float = 0.0
 
 
+@dataclass
 class Bus:
     """Bus sensing
 
@@ -107,9 +109,8 @@ class Bus:
 
     """
 
-    def __init__(self):
-        self.current = 0.0
-        self.voltage = 0.0
+    current: float = 0.0
+    voltage: float = 0.0
 
     def __str__(self) -> str:
         text = f"""\
@@ -168,6 +169,7 @@ class Battery:
         return text
 
 
+@dataclass
 class Cell:
     """Battery's Cell
 
@@ -177,8 +179,7 @@ class Cell:
         voltage (float)
     """
 
-    def __init__(self, voltage: float = 0.0):
-        self.voltage = voltage
+    voltage: float = 0.0
 
     def __str__(self) -> str:
         return f"{self.voltage}V"
